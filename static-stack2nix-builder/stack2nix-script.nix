@@ -71,12 +71,12 @@
         #
         # Versions < 0.2.4 aren't supported, force-upgrade them to 0.2.4.
         if stack2nix_pkgs.lib.versionOlder stack2nix_pkgs.stack2nix.version "0.2.4"
-          then stack2nix_pkgs.haskellPackages.callCabal2nix "stack2nix" (stack2nix_pkgs.fetchFromGitHub {
+          then stack2nix_pkgs.haskellPackages.callCabal2nixWithOptions "stack2nix" (stack2nix_pkgs.fetchFromGitHub {
             owner = "nh2";
             repo = "stack2nix";
             rev = "c009e33af30c76b8fe94388382d816079fb5ac4e";
             sha256 = "0x0hjzjlx1a0pyjd8aalk3ajwcymsb2qd65n2sqdhpy9bdsz8vxl";
-          }) {}
+          }) "--no-haddock --no-check" {}
           else stack2nix_pkgs.stack2nix;
   in
   pkgs.writeScript "stack2nix-build-script.sh" ''
